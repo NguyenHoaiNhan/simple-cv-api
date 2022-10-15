@@ -1,23 +1,23 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SimpleCV.Data;
-using SimpleCV.Models;
+using SimpleCV.Data.EF;
+using SimpleCV.Data.Entities;
 
 namespace SimpleCV.Controllers
 {
-    [Route("api/cv")]
+    [Route("api/users")]
     [ApiController]
     public class CvController : ControllerBase
     {
-        private readonly CvDbContext _context;
-        public CvController(CvDbContext context) => _context = context;
+        private readonly PgDbContext _context;
+
+        public CvController(PgDbContext context) => _context = context;
 
         [HttpGet]
-        [Route("users")]
-        public async Task<IEnumerable<Users>> Get() => await _context.Users.ToListAsync();
+        public async Task<IEnumerable<User>> Get() => await _context.Users.ToListAsync();
 
         [HttpGet("id")]
-        [ProducesResponseType(typeof(Users), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetById(int id)
         {
@@ -26,7 +26,7 @@ namespace SimpleCV.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Users user)
+        public async Task<IActionResult> Create(User user)
         {
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
@@ -34,7 +34,7 @@ namespace SimpleCV.Controllers
                 nameof(GetById),
                 new
                 {
-                    id = user.userId
+                    id = user.Id
                 },
                 user
             );

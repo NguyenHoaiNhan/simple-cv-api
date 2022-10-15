@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using SimpleCV.Data;
+using SimpleCV.Data.EF;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -24,7 +24,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<CvDbContext>(
+builder.Services.AddDbContext<PgDbContext>(
     o => o.UseNpgsql(builder.Configuration.GetConnectionString("simple-cv-db"))
 );
 
