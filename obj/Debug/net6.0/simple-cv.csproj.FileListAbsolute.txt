@@ -33,3 +33,6 @@ D:\dotnet-project\simple-cv\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relat
 D:\dotnet-project\simple-cv\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
 D:\dotnet-project\simple-cv\bin\Debug\net6.0\Npgsql.dll
 D:\dotnet-project\simple-cv\bin\Debug\net6.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+D:\dotnet-project\simple-cv\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
+D:\dotnet-project\simple-cv\bin\Debug\net6.0\AutoMapper.dll
+D:\dotnet-project\simple-cv\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

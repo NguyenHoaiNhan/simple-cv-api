@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using SimpleCV.Data.Conf;
+using SimpleCV.Data.DataContext.Conf;
 using SimpleCV.Data.Entities;
 
-namespace SimpleCV.Data.EF
+namespace SimpleCV.Data.DataContext.EF
 {
     public class PgDbContext : DbContext
     {

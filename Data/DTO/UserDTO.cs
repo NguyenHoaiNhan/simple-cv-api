@@ -1,6 +1,6 @@
-namespace SimpleCV.Data.Entities
+namespace SimpleCV.Data.DTO
 {
-    public class User
+    public class UserDTO
     {
         public int Id { get; set; }
 

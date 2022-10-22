@@ -1,43 +1,97 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SimpleCV.Data.EF;
-using SimpleCV.Data.Entities;
+using SimpleCV.Data.DTO;
+using SimpleCV.Services.IServices;
 
 namespace SimpleCV.Controllers
 {
     [Route("api/users")]
     [ApiController]
-    public class CvController : ControllerBase
+    public class UserController : ControllerBase
     {
-        private readonly PgDbContext _context;
+        private readonly IUserService _userService;
 
-        public CvController(PgDbContext context) => _context = context;
+        public UserController(IUserService userService)
+        {
+            _userService = userService;
+        }
 
         [HttpGet]
-        public async Task<IEnumerable<User>> Get() => await _context.Users.ToListAsync();
-
-        [HttpGet("id")]
-        [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(string), StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetUsers()
         {
-            var cv = await _context.Users.FindAsync(id);
-            return cv == null ? NotFound() : Ok(cv);
+            try
+            {
+                return Ok(await _userService.GetUsers());
+            }
+            catch (Exception)
+            {
+                return BadRequest("Get all users failed");
+            }
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetUser(int id)
+        {
+            try
+            {
+                return Ok(await _userService.GetUser(id));
+            }
+            catch (Exception)
+            {
+                return BadRequest($"User with {id} not found");
+            }
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(User user)
+        public async Task<IActionResult> AddUser(UserToAddDTO user)
         {
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction(
-                nameof(GetById),
-                new
-                {
-                    id = user.Id
-                },
-                user
-            );
+            try
+            {
+                return Ok(await _userService.AddUser(user));
+            }
+            catch (Exception)
+            {
+                return BadRequest("Add user failed");
+            }
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateUser(UserDTO user)
+        {
+            try
+            {
+                return Ok(await _userService.UpdateUser(user));
+            }
+            catch (Exception)
+            {
+                return BadRequest("Update user failed");
+            }
+        }
+
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> UpdateUserProperties(int Id, [FromBody] List<UserPatchDTO> userPatchDto)
+        {
+            try
+            {
+                return Ok(await _userService.UpdateUserProperties(Id, userPatchDto));
+            }
+            catch (Exception)
+            {
+                return BadRequest("Update field failed");
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            try
+            {
+                await _userService.DeleteUser(id);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest("Delete user failed");
+            }
         }
     }
 }
