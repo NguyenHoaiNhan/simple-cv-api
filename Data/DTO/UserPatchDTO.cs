@@ -4,6 +4,6 @@ namespace SimpleCV.Data.DTO
     {
         public string PropertyName { get; set; }
 
-        public object PropertyValue { get; set; }
+        public string PropertyValue { get; set; }
     }
 }

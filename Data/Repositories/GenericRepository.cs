@@ -43,9 +43,14 @@ namespace SimpleCV.Data.Repositories
 
         public async Task<List<TEntity>> GetList(Expression<Func<TEntity, bool>> filter = null)
         {
-            return await (filter == null
-                ? _pgDbContext.Set<TEntity>().ToListAsync()
-                : _pgDbContext.Set<TEntity>().Where(filter).ToListAsync());
+            var entityQuery = _pgDbContext.Set<TEntity>().AsQueryable();
+
+            if (filter != null)
+            {
+                entityQuery = entityQuery.Where(filter);
+            }
+
+            return await entityQuery.ToListAsync();
         }
 
         public async Task<TEntity> Update(TEntity entity)
