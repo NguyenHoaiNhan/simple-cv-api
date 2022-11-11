@@ -12,7 +12,7 @@ namespace SimpleCV.Data.Entities
         public string? ActivityTitle { get; set; }
 
         /// Config 1:1 relationship Activity : Description
-        public Description? RefDescription { get; set; }
+        public virtual Description? RefDescription { get; set; }
 
         // Config n:1 relationship Activity:CVActivity
         public virtual ICollection<CVActivity>? CVActivities { get; set; }

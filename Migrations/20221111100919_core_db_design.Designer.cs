@@ -12,7 +12,7 @@ using SimpleCV.Data.DataContext.EF;
 namespace simple_cv.Migrations
 {
     [DbContext(typeof(PgDbContext))]
-    [Migration("20221110162634_core_db_design")]
+    [Migration("20221111100919_core_db_design")]
     partial class core_db_design
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -98,17 +98,9 @@ namespace simple_cv.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("act_id");
 
-                    b.Property<int?>("FKActivityId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("FKCVId")
-                        .HasColumnType("integer");
-
                     b.HasKey("CVId", "ActivityId");
 
-                    b.HasIndex("FKActivityId");
-
-                    b.HasIndex("FKCVId");
+                    b.HasIndex("ActivityId");
 
                     b.ToTable("cv_activity", (string)null);
                 });
@@ -123,17 +115,9 @@ namespace simple_cv.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("skill_id");
 
-                    b.Property<int?>("FKCVId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("FKSkillId")
-                        .HasColumnType("integer");
-
                     b.HasKey("CVId", "SkillId");
 
-                    b.HasIndex("FKCVId");
-
-                    b.HasIndex("FKSkillId");
+                    b.HasIndex("SkillId");
 
                     b.ToTable("cv_skill", (string)null);
                 });
@@ -141,11 +125,8 @@ namespace simple_cv.Migrations
             modelBuilder.Entity("SimpleCV.Data.Entities.Description", b =>
                 {
                     b.Property<int>("ActivityId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasColumnName("act_id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ActivityId"));
 
                     b.Property<int?>("Alignment")
                         .HasColumnType("integer")
@@ -154,9 +135,6 @@ namespace simple_cv.Migrations
                     b.Property<int?>("BulletType")
                         .HasColumnType("integer")
                         .HasColumnName("bullet_type");
-
-                    b.Property<int?>("FKActivityId")
-                        .HasColumnType("integer");
 
                     b.Property<bool?>("IsBold")
                         .HasColumnType("boolean")
@@ -172,20 +150,14 @@ namespace simple_cv.Migrations
 
                     b.HasKey("ActivityId");
 
-                    b.HasIndex("FKActivityId")
-                        .IsUnique();
-
                     b.ToTable("description", (string)null);
                 });
 
             modelBuilder.Entity("SimpleCV.Data.Entities.Info", b =>
                 {
                     b.Property<int>("CVId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasColumnName("cv_id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("CVId"));
 
                     b.Property<string>("Address")
                         .HasColumnType("text")
@@ -226,9 +198,6 @@ namespace simple_cv.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("text")
                         .HasColumnName("email");
-
-                    b.Property<int?>("FKCVId")
-                        .HasColumnType("integer");
 
                     b.Property<string>("FamilyName")
                         .HasColumnType("text")
@@ -271,9 +240,6 @@ namespace simple_cv.Migrations
                         .HasColumnName("post_code");
 
                     b.HasKey("CVId");
-
-                    b.HasIndex("FKCVId")
-                        .IsUnique();
 
                     b.ToTable("info", (string)null);
                 });
@@ -346,11 +312,15 @@ namespace simple_cv.Migrations
                 {
                     b.HasOne("SimpleCV.Data.Entities.Activity", "RefActivity")
                         .WithMany("CVActivities")
-                        .HasForeignKey("FKActivityId");
+                        .HasForeignKey("ActivityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SimpleCV.Data.Entities.CV", "RefCV")
                         .WithMany("CVActivities")
-                        .HasForeignKey("FKCVId");
+                        .HasForeignKey("CVId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("RefActivity");
 
@@ -361,11 +331,15 @@ namespace simple_cv.Migrations
                 {
                     b.HasOne("SimpleCV.Data.Entities.CV", "RefCV")
                         .WithMany("CVSkills")
-                        .HasForeignKey("FKCVId");
+                        .HasForeignKey("CVId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SimpleCV.Data.Entities.Skill", "RefSkill")
                         .WithMany("CVSkills")
-                        .HasForeignKey("FKSkillId");
+                        .HasForeignKey("SkillId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("RefCV");
 
@@ -376,7 +350,9 @@ namespace simple_cv.Migrations
                 {
                     b.HasOne("SimpleCV.Data.Entities.Activity", "RefActivity")
                         .WithOne("RefDescription")
-                        .HasForeignKey("SimpleCV.Data.Entities.Description", "FKActivityId");
+                        .HasForeignKey("SimpleCV.Data.Entities.Description", "ActivityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("RefActivity");
                 });
@@ -385,7 +361,9 @@ namespace simple_cv.Migrations
                 {
                     b.HasOne("SimpleCV.Data.Entities.CV", "RefCV")
                         .WithOne("RefInfo")
-                        .HasForeignKey("SimpleCV.Data.Entities.Info", "FKCVId");
+                        .HasForeignKey("SimpleCV.Data.Entities.Info", "CVId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("RefCV");
                 });

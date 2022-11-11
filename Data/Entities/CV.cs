@@ -7,7 +7,7 @@ namespace SimpleCV.Data.Entities
         public string? CVUrl { get; set; }
 
         /// Config 1:1 relationship CV:Info 
-        public Info? RefInfo { get; set; }
+        public virtual Info? RefInfo { get; set; }
 
         /// Config n:1 relationship CV:CVActivity
         public virtual ICollection<CVActivity>? CVActivities { get; set; }

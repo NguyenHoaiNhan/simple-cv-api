@@ -25,7 +25,6 @@ namespace SimpleCV.Data.Entities
         public string? InfoTitle { get; set; }
 
         /// Config 1:1 relationship CV:Info 
-        public int? FKCVId { get; set; }
-        public CV? RefCV { get; set; }
+        public virtual CV? RefCV { get; set; }
     }
 }
