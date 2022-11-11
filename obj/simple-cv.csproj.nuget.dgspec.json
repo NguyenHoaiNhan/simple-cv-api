@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\dotnet-project\\simple-cv\\simple-cv.csproj": {}
+    "D:\\simple-cv\\SCB\\simple-cv.csproj": {}
   },
   "projects": {
-    "D:\\dotnet-project\\simple-cv\\simple-cv.csproj": {
+    "D:\\simple-cv\\SCB\\simple-cv.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\dotnet-project\\simple-cv\\simple-cv.csproj",
+        "projectUniqueName": "D:\\simple-cv\\SCB\\simple-cv.csproj",
         "projectName": "simple-cv",
-        "projectPath": "D:\\dotnet-project\\simple-cv\\simple-cv.csproj",
+        "projectPath": "D:\\simple-cv\\SCB\\simple-cv.csproj",
         "packagesPath": "C:\\Users\\nhann\\.nuget\\packages\\",
-        "outputPath": "D:\\dotnet-project\\simple-cv\\obj\\",
+        "outputPath": "D:\\simple-cv\\SCB\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\nhann\\AppData\\Roaming\\NuGet\\NuGet.Config"

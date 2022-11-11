@@ -10,7 +10,11 @@ namespace SimpleCV.Data.Entities
         public DateOnly? EndDate { get; set; }
         public string? ActivityType { get; set; }
         public string? ActivityTitle { get; set; }
-        public virtual Description? RefDescription { get; set; }
-        public virtual ICollection<CV>? CVs { get; set; }
+
+        /// Config 1:1 relationship Activity : Description
+        public Description? RefDescription { get; set; }
+
+        // Config n:1 relationship Activity:CVActivity
+        public virtual ICollection<CVActivity>? CVActivities { get; set; }
     }
 }

@@ -7,6 +7,8 @@ namespace SimpleCV.Data.Entities
         public int? Level { get; set; }
         public string? SkillType { get; set; }
         public string? SkillTitle { get; set; }
-        public virtual ICollection<CV>? CVs { get; set; }
+
+        /// Config 1:n relationship CVSkill:Skill
+        public virtual ICollection<CVSkill>? CVSkills { get; set; }
     }
 }

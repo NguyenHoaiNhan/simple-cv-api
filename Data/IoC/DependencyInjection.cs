@@ -15,7 +15,7 @@ namespace SimpleCV.Data.IoC
         {
             services.AddDbContext<PgDbContext>(
                 options => {
-                    options.UseNpgsql(configuration.GetConnectionString("simple-cv-db2"));
+                    options.UseNpgsql(configuration.GetConnectionString("simple-cv-db"));
                 }
             );
             

@@ -5,8 +5,14 @@ namespace SimpleCV.Data.Entities
         public int CVId { get; set; }
         public DateTime? CreateDate { get; set; }
         public string? CVUrl { get; set; }
-        public virtual Info? RefInfo { get; set; }
-        public virtual ICollection<Skill>? Skills { get; set; }
-        public virtual ICollection<Activity>? Activities { get; set; }
+
+        /// Config 1:1 relationship CV:Info 
+        public Info? RefInfo { get; set; }
+
+        /// Config n:1 relationship CV:CVActivity
+        public virtual ICollection<CVActivity>? CVActivities { get; set; }
+        
+        /// Config n:1 relationship Skill:CVSkill
+        public virtual ICollection<CVSkill>? CVSkills { get; set; }
     }
 }

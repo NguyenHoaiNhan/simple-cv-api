@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "VfnclhtMPIMOJ23srj6GRg9ymdzaiA6bwD0e3M12o8mGIy9ao9ClnFXx/VQiheuOX7jKEuhie9C1Zx9rOEnkFQ==",
+  "dgSpecHash": "GAc/wsVMug99IbGxdlOVX2AH+mZ0oFB6rBHtv2AdUdrUKEx0MB618ccUxmAhHh1IlSdw/ORnmGupLqaJ6C0VvA==",
   "success": true,
-  "projectFilePath": "D:\\dotnet-project\\simple-cv\\simple-cv.csproj",
+  "projectFilePath": "D:\\simple-cv\\SCB\\simple-cv.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\nhann\\.nuget\\packages\\automapper\\12.0.0\\automapper.12.0.0.nupkg.sha512",
     "C:\\Users\\nhann\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.0\\automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",

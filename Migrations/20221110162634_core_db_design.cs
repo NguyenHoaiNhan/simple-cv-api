@@ -80,53 +80,55 @@ namespace simple_cv.Migrations
                 name: "description",
                 columns: table => new
                 {
-                    act_id = table.Column<int>(type: "integer", nullable: false),
+                    act_id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     is_bold = table.Column<bool>(type: "boolean", nullable: true),
                     is_italic = table.Column<bool>(type: "boolean", nullable: true),
                     is_underline = table.Column<bool>(type: "boolean", nullable: true),
                     bullet_type = table.Column<int>(type: "integer", nullable: true),
-                    alignment = table.Column<int>(type: "integer", nullable: true)
+                    alignment = table.Column<int>(type: "integer", nullable: true),
+                    FKActivityId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_description", x => x.act_id);
                     table.ForeignKey(
-                        name: "FK_description_activity_act_id",
-                        column: x => x.act_id,
+                        name: "FK_description_activity_FKActivityId",
+                        column: x => x.FKActivityId,
                         principalTable: "activity",
-                        principalColumn: "act_id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "act_id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "cv_activity",
                 columns: table => new
                 {
-                    ActivitiesActId = table.Column<int>(type: "integer", nullable: false),
-                    CVsCVId = table.Column<int>(type: "integer", nullable: false)
+                    cv_id = table.Column<int>(type: "integer", nullable: false),
+                    act_id = table.Column<int>(type: "integer", nullable: false),
+                    FKActivityId = table.Column<int>(type: "integer", nullable: true),
+                    FKCVId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_cv_activity", x => new { x.ActivitiesActId, x.CVsCVId });
+                    table.PrimaryKey("PK_cv_activity", x => new { x.cv_id, x.act_id });
                     table.ForeignKey(
-                        name: "FK_cv_activity_activity_ActivitiesActId",
-                        column: x => x.ActivitiesActId,
+                        name: "FK_cv_activity_activity_FKActivityId",
+                        column: x => x.FKActivityId,
                         principalTable: "activity",
-                        principalColumn: "act_id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "act_id");
                     table.ForeignKey(
-                        name: "FK_cv_activity_cv_CVsCVId",
-                        column: x => x.CVsCVId,
+                        name: "FK_cv_activity_cv_FKCVId",
+                        column: x => x.FKCVId,
                         principalTable: "cv",
-                        principalColumn: "cv_id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "cv_id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "info",
                 columns: table => new
                 {
-                    cv_id = table.Column<int>(type: "integer", nullable: false),
+                    cv_id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     given_name = table.Column<string>(type: "text", nullable: true),
                     family_name = table.Column<string>(type: "text", nullable: true),
                     email = table.Column<string>(type: "text", nullable: true),
@@ -146,52 +148,74 @@ namespace simple_cv.Migrations
                     avatar = table.Column<string>(type: "text", nullable: true),
                     civil_status = table.Column<string>(type: "text", nullable: true),
                     country = table.Column<string>(type: "text", nullable: true),
-                    info_title = table.Column<string>(type: "text", nullable: true)
+                    info_title = table.Column<string>(type: "text", nullable: true),
+                    FKCVId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_info", x => x.cv_id);
                     table.ForeignKey(
-                        name: "FK_info_cv_cv_id",
-                        column: x => x.cv_id,
+                        name: "FK_info_cv_FKCVId",
+                        column: x => x.FKCVId,
                         principalTable: "cv",
-                        principalColumn: "cv_id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "cv_id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "cv_skill",
                 columns: table => new
                 {
-                    CVsCVId = table.Column<int>(type: "integer", nullable: false),
-                    SkillsSkillId = table.Column<int>(type: "integer", nullable: false)
+                    cv_id = table.Column<int>(type: "integer", nullable: false),
+                    skill_id = table.Column<int>(type: "integer", nullable: false),
+                    FKCVId = table.Column<int>(type: "integer", nullable: true),
+                    FKSkillId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_cv_skill", x => new { x.CVsCVId, x.SkillsSkillId });
+                    table.PrimaryKey("PK_cv_skill", x => new { x.cv_id, x.skill_id });
                     table.ForeignKey(
-                        name: "FK_cv_skill_cv_CVsCVId",
-                        column: x => x.CVsCVId,
+                        name: "FK_cv_skill_cv_FKCVId",
+                        column: x => x.FKCVId,
                         principalTable: "cv",
-                        principalColumn: "cv_id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "cv_id");
                     table.ForeignKey(
-                        name: "FK_cv_skill_skill_SkillsSkillId",
-                        column: x => x.SkillsSkillId,
+                        name: "FK_cv_skill_skill_FKSkillId",
+                        column: x => x.FKSkillId,
                         principalTable: "skill",
-                        principalColumn: "skill_id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "skill_id");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_cv_activity_CVsCVId",
+                name: "IX_cv_activity_FKActivityId",
                 table: "cv_activity",
-                column: "CVsCVId");
+                column: "FKActivityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_cv_skill_SkillsSkillId",
+                name: "IX_cv_activity_FKCVId",
+                table: "cv_activity",
+                column: "FKCVId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_cv_skill_FKCVId",
                 table: "cv_skill",
-                column: "SkillsSkillId");
+                column: "FKCVId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_cv_skill_FKSkillId",
+                table: "cv_skill",
+                column: "FKSkillId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_description_FKActivityId",
+                table: "description",
+                column: "FKActivityId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_info_FKCVId",
+                table: "info",
+                column: "FKCVId",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -23,6 +23,9 @@ namespace SimpleCV.Data.Entities
         public string? CivilStatus { get; set; }
         public string? Country { get; set; }
         public string? InfoTitle { get; set; }
-        public virtual CV? RefCV { get; set; }
+
+        /// Config 1:1 relationship CV:Info 
+        public int? FKCVId { get; set; }
+        public CV? RefCV { get; set; }
     }
 }

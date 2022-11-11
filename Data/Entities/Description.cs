@@ -8,6 +8,9 @@ namespace SimpleCV.Data.Entities
         public bool? IsUnderline { get; set; }
         public int? BulletType { get; set; }
         public int? Alignment { get; set; }
-        public virtual Activity? RefActivity { get; set; }
+
+        /// Config 1:1 relationship Activity:Description
+        public int? FKActivityId{get;set;}
+        public Activity? RefActivity { get; set; }
     }
 }
