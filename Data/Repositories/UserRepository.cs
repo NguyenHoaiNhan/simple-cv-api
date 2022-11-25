@@ -1,16 +1,16 @@
 using Microsoft.EntityFrameworkCore;
 using SimpleCV.Data.DataContext.EF;
-using SimpleCV.Data.DTO;
+using SimpleCV.Data.DTO.User;
 using SimpleCV.Data.Entities;
 using SimpleCV.Data.Repositories.IRepositories;
 
-namespace SimpleCV.Data.Repositories 
+namespace SimpleCV.Data.Repositories
 {
-    public class UserRepository : GenericRepository<User>, IUserRepository 
+    public class UserRepository : GenericRepository<User>, IUserRepository
     {
         private readonly PgDbContext _pgDbContext;
 
-        public UserRepository (PgDbContext pgDbContext) : base(pgDbContext)
+        public UserRepository(PgDbContext pgDbContext) : base(pgDbContext)
         {
             _pgDbContext = pgDbContext;
         }

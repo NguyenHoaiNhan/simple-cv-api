@@ -31,20 +31,20 @@ namespace simple_cv.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ActId"));
 
-                    b.Property<string>("ActivityTitle")
-                        .HasColumnType("text")
-                        .HasColumnName("activity_title");
-
                     b.Property<string>("ActivityType")
                         .HasColumnType("text")
                         .HasColumnName("activity_type");
+
+                    b.Property<int>("CVid")
+                        .HasColumnType("integer")
+                        .HasColumnName("cv_id");
 
                     b.Property<string>("City")
                         .HasColumnType("text")
                         .HasColumnName("city");
 
-                    b.Property<DateOnly?>("EndDate")
-                        .HasColumnType("date")
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("end_date");
 
                     b.Property<string>("Organization")
@@ -55,11 +55,13 @@ namespace simple_cv.Migrations
                         .HasColumnType("text")
                         .HasColumnName("position");
 
-                    b.Property<DateOnly?>("StartDate")
-                        .HasColumnType("date")
+                    b.Property<DateTime?>("StartDate")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("start_date");
 
                     b.HasKey("ActId");
+
+                    b.HasIndex("CVid");
 
                     b.ToTable("activity", (string)null);
                 });
@@ -86,23 +88,6 @@ namespace simple_cv.Migrations
                     b.ToTable("cv", (string)null);
                 });
 
-            modelBuilder.Entity("SimpleCV.Data.Entities.CVActivity", b =>
-                {
-                    b.Property<int>("CVId")
-                        .HasColumnType("integer")
-                        .HasColumnName("cv_id");
-
-                    b.Property<int>("ActivityId")
-                        .HasColumnType("integer")
-                        .HasColumnName("act_id");
-
-                    b.HasKey("CVId", "ActivityId");
-
-                    b.HasIndex("ActivityId");
-
-                    b.ToTable("cv_activity", (string)null);
-                });
-
             modelBuilder.Entity("SimpleCV.Data.Entities.CVSkill", b =>
                 {
                     b.Property<int>("CVId")
@@ -112,6 +97,10 @@ namespace simple_cv.Migrations
                     b.Property<int>("SkillId")
                         .HasColumnType("integer")
                         .HasColumnName("skill_id");
+
+                    b.Property<int?>("Level")
+                        .HasColumnType("integer")
+                        .HasColumnName("level");
 
                     b.HasKey("CVId", "SkillId");
 
@@ -133,6 +122,10 @@ namespace simple_cv.Migrations
                     b.Property<int?>("BulletType")
                         .HasColumnType("integer")
                         .HasColumnName("bullet_type");
+
+                    b.Property<string>("DescriptionPara")
+                        .HasColumnType("text")
+                        .HasColumnName("description_paragraph");
 
                     b.Property<bool?>("IsBold")
                         .HasColumnType("boolean")
@@ -185,8 +178,8 @@ namespace simple_cv.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("country_id");
 
-                    b.Property<DateOnly?>("DateOfBirth")
-                        .HasColumnType("date")
+                    b.Property<DateTime?>("DateOfBirth")
+                        .HasColumnType("timestamp with time zone")
                         .HasColumnName("date_of_birth");
 
                     b.Property<string>("DriverLicense")
@@ -251,17 +244,9 @@ namespace simple_cv.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("SkillId"));
 
-                    b.Property<int?>("Level")
-                        .HasColumnType("integer")
-                        .HasColumnName("level");
-
                     b.Property<string>("SkillName")
                         .HasColumnType("text")
                         .HasColumnName("skill_name");
-
-                    b.Property<string>("SkillTitle")
-                        .HasColumnType("text")
-                        .HasColumnName("skill_title");
 
                     b.Property<string>("SkillType")
                         .HasColumnType("text")
@@ -282,22 +267,27 @@ namespace simple_cv.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("address");
 
                     b.Property<string>("FamilyName")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("family_name");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("first_name");
 
                     b.Property<string>("MidName")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("mid_name");
 
                     b.Property<string>("Phone")
+                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("phone");
 
@@ -306,21 +296,13 @@ namespace simple_cv.Migrations
                     b.ToTable("user", (string)null);
                 });
 
-            modelBuilder.Entity("SimpleCV.Data.Entities.CVActivity", b =>
+            modelBuilder.Entity("SimpleCV.Data.Entities.Activity", b =>
                 {
-                    b.HasOne("SimpleCV.Data.Entities.Activity", "RefActivity")
-                        .WithMany("CVActivities")
-                        .HasForeignKey("ActivityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("SimpleCV.Data.Entities.CV", "RefCV")
-                        .WithMany("CVActivities")
-                        .HasForeignKey("CVId")
+                        .WithMany("Activities")
+                        .HasForeignKey("CVid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("RefActivity");
 
                     b.Navigation("RefCV");
                 });
@@ -368,14 +350,12 @@ namespace simple_cv.Migrations
 
             modelBuilder.Entity("SimpleCV.Data.Entities.Activity", b =>
                 {
-                    b.Navigation("CVActivities");
-
                     b.Navigation("RefDescription");
                 });
 
             modelBuilder.Entity("SimpleCV.Data.Entities.CV", b =>
                 {
-                    b.Navigation("CVActivities");
+                    b.Navigation("Activities");
 
                     b.Navigation("CVSkills");
 

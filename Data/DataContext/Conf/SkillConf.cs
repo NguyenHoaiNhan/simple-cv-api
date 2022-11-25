@@ -11,9 +11,7 @@ namespace SimpleCV.Data.DataContext.Conf
             builder.HasKey(x => x.SkillId);
             builder.Property(x => x.SkillId).HasColumnName("skill_id");
             builder.Property(x => x.SkillName).HasColumnName("skill_name");
-            builder.Property(x => x.Level).HasColumnName("level").IsRequired(false);
             builder.Property(x => x.SkillType).HasColumnName("skill_type");
-            builder.Property(x => x.SkillTitle).HasColumnName("skill_title");
         }
     }
 }

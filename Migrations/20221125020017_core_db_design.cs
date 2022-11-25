@@ -11,25 +11,6 @@ namespace simple_cv.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "activity",
-                columns: table => new
-                {
-                    act_id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    position = table.Column<string>(type: "text", nullable: true),
-                    organization = table.Column<string>(type: "text", nullable: true),
-                    city = table.Column<string>(type: "text", nullable: true),
-                    start_date = table.Column<DateOnly>(type: "date", nullable: true),
-                    end_date = table.Column<DateOnly>(type: "date", nullable: true),
-                    activity_type = table.Column<string>(type: "text", nullable: true),
-                    activity_title = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_activity", x => x.act_id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "cv",
                 columns: table => new
                 {
@@ -50,9 +31,7 @@ namespace simple_cv.Migrations
                     skill_id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     skill_name = table.Column<string>(type: "text", nullable: true),
-                    level = table.Column<int>(type: "integer", nullable: true),
-                    skill_type = table.Column<string>(type: "text", nullable: true),
-                    skill_title = table.Column<string>(type: "text", nullable: true)
+                    skill_type = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -65,11 +44,11 @@ namespace simple_cv.Migrations
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    first_name = table.Column<string>(type: "text", nullable: true),
-                    family_name = table.Column<string>(type: "text", nullable: true),
-                    mid_name = table.Column<string>(type: "text", nullable: true),
-                    phone = table.Column<string>(type: "text", nullable: true),
-                    address = table.Column<string>(type: "text", nullable: true)
+                    first_name = table.Column<string>(type: "text", nullable: false),
+                    family_name = table.Column<string>(type: "text", nullable: false),
+                    mid_name = table.Column<string>(type: "text", nullable: false),
+                    phone = table.Column<string>(type: "text", nullable: false),
+                    address = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -77,45 +56,24 @@ namespace simple_cv.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "description",
+                name: "activity",
                 columns: table => new
                 {
-                    act_id = table.Column<int>(type: "integer", nullable: false),
-                    is_bold = table.Column<bool>(type: "boolean", nullable: true),
-                    is_italic = table.Column<bool>(type: "boolean", nullable: true),
-                    is_underline = table.Column<bool>(type: "boolean", nullable: true),
-                    bullet_type = table.Column<int>(type: "integer", nullable: true),
-                    alignment = table.Column<int>(type: "integer", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_description", x => x.act_id);
-                    table.ForeignKey(
-                        name: "FK_description_activity_act_id",
-                        column: x => x.act_id,
-                        principalTable: "activity",
-                        principalColumn: "act_id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "cv_activity",
-                columns: table => new
-                {
-                    cv_id = table.Column<int>(type: "integer", nullable: false),
                     act_id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    position = table.Column<string>(type: "text", nullable: true),
+                    organization = table.Column<string>(type: "text", nullable: true),
+                    city = table.Column<string>(type: "text", nullable: true),
+                    start_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    end_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    activity_type = table.Column<string>(type: "text", nullable: true),
+                    cv_id = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_cv_activity", x => new { x.cv_id, x.act_id });
+                    table.PrimaryKey("PK_activity", x => x.act_id);
                     table.ForeignKey(
-                        name: "FK_cv_activity_activity_act_id",
-                        column: x => x.act_id,
-                        principalTable: "activity",
-                        principalColumn: "act_id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_cv_activity_cv_cv_id",
+                        name: "FK_activity_cv_cv_id",
                         column: x => x.cv_id,
                         principalTable: "cv",
                         principalColumn: "cv_id",
@@ -135,7 +93,7 @@ namespace simple_cv.Migrations
                     address = table.Column<string>(type: "text", nullable: true),
                     post_code = table.Column<string>(type: "text", nullable: true),
                     city = table.Column<string>(type: "text", nullable: true),
-                    date_of_birth = table.Column<DateOnly>(type: "date", nullable: true),
+                    date_of_birth = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     place_of_birth = table.Column<string>(type: "text", nullable: true),
                     driver_license = table.Column<string>(type: "text", nullable: true),
                     gender = table.Column<int>(type: "integer", nullable: true),
@@ -164,7 +122,8 @@ namespace simple_cv.Migrations
                 columns: table => new
                 {
                     cv_id = table.Column<int>(type: "integer", nullable: false),
-                    skill_id = table.Column<int>(type: "integer", nullable: false)
+                    skill_id = table.Column<int>(type: "integer", nullable: false),
+                    level = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -183,10 +142,33 @@ namespace simple_cv.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "description",
+                columns: table => new
+                {
+                    act_id = table.Column<int>(type: "integer", nullable: false),
+                    description_paragraph = table.Column<string>(type: "text", nullable: true),
+                    is_bold = table.Column<bool>(type: "boolean", nullable: true),
+                    is_italic = table.Column<bool>(type: "boolean", nullable: true),
+                    is_underline = table.Column<bool>(type: "boolean", nullable: true),
+                    bullet_type = table.Column<int>(type: "integer", nullable: true),
+                    alignment = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_description", x => x.act_id);
+                    table.ForeignKey(
+                        name: "FK_description_activity_act_id",
+                        column: x => x.act_id,
+                        principalTable: "activity",
+                        principalColumn: "act_id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
-                name: "IX_cv_activity_act_id",
-                table: "cv_activity",
-                column: "act_id");
+                name: "IX_activity_cv_id",
+                table: "activity",
+                column: "cv_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_cv_skill_skill_id",
@@ -196,9 +178,6 @@ namespace simple_cv.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "cv_activity");
-
             migrationBuilder.DropTable(
                 name: "cv_skill");
 

@@ -15,6 +15,7 @@ namespace SimpleCV.Data.DataContext.Conf
             builder.Property(x => x.IsUnderline).HasColumnName("is_underline").IsRequired(false);
             builder.Property(x => x.BulletType).HasColumnName("bullet_type").IsRequired(false);
             builder.Property(x => x.Alignment).HasColumnName("alignment");
+            builder.Property(x => x.DescriptionPara).HasColumnName("description_paragraph").IsRequired(false);
         }
     }
 }

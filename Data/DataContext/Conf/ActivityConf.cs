@@ -16,7 +16,7 @@ namespace SimpleCV.Data.DataContext.Conf
            builder.Property(x => x.StartDate).HasColumnName("start_date").IsRequired(false);
            builder.Property(x => x.EndDate).HasColumnName("end_date").IsRequired(false);
            builder.Property(x => x.ActivityType).HasColumnName("activity_type");
-           builder.Property(x => x.ActivityTitle).HasColumnName("activity_title");
+           builder.Property(x => x.CVId).HasColumnName("cv_id");
         }
     }
 }

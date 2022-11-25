@@ -1,4 +1,4 @@
-using SimpleCV.Data.DTO;
+using SimpleCV.Data.DTO.User;
 using SimpleCV.Data.Entities;
 
 namespace SimpleCV.Data.Repositories.IRepositories 

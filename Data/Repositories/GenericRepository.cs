@@ -55,7 +55,7 @@ namespace SimpleCV.Data.Repositories
 
         public async Task<TEntity> Update(TEntity entity)
         {
-            var entityToUpdate = _pgDbContext.Update(entity);
+            _pgDbContext.Update(entity);
             await _pgDbContext.SaveChangesAsync();
             return entity;
         }

@@ -74,3 +74,7 @@ D:\simple-cv\SCB\obj\Debug\net6.0\refint\simple-cv.dll
 D:\simple-cv\SCB\obj\Debug\net6.0\simple-cv.pdb
 D:\simple-cv\SCB\obj\Debug\net6.0\simple-cv.genruntimeconfig.cache
 D:\simple-cv\SCB\obj\Debug\net6.0\ref\simple-cv.dll
+D:\simple-cv\SCB\bin\Debug\net6.0\Microsoft.AspNetCore.JsonPatch.dll
+D:\simple-cv\SCB\bin\Debug\net6.0\Newtonsoft.Json.dll
+D:\simple-cv\SCB\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+D:\simple-cv\SCB\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll

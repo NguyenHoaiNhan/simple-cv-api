@@ -9,8 +9,8 @@ namespace SimpleCV.Data.Entities
         /// Config 1:1 relationship CV:Info 
         public virtual Info? RefInfo { get; set; }
 
-        /// Config n:1 relationship CV:CVActivity
-        public virtual ICollection<CVActivity>? CVActivities { get; set; }
+        /// Config 1:n relationship CV:Activity
+        public virtual ICollection<Activity>? Activities{get;set;}
         
         /// Config n:1 relationship Skill:CVSkill
         public virtual ICollection<CVSkill>? CVSkills { get; set; }

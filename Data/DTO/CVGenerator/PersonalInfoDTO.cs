@@ -1,8 +1,9 @@
-namespace SimpleCV.Data.Entities
+namespace SimpleCV.Data.DTO.CVGenerator
 {
-    public class Info
+    public class PersonalInfoDTO
     {
         public int CVId { get; set; }
+        public string? SectionTitle { get; set; } = "Personal Information";
         public string? GivenName { get; set; }
         public string? FamilyName { get; set; }
         public string? Email { get; set; }
@@ -22,9 +23,5 @@ namespace SimpleCV.Data.Entities
         public string? Avatar { get; set; }
         public string? CivilStatus { get; set; }
         public string? Country { get; set; }
-        public string? InfoTitle { get; set; }
-
-        /// Config 1:1 relationship CV:Info 
-        public virtual CV? RefCV { get; set; }
     }
 }

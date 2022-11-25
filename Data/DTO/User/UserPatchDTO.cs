@@ -1,4 +1,4 @@
-namespace SimpleCV.Data.DTO
+namespace SimpleCV.Data.DTO.User
 {
     public class UserPatchDTO
     {
