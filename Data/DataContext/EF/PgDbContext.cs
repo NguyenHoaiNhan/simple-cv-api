@@ -10,7 +10,7 @@ namespace SimpleCV.Data.DataContext.EF
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new UserConf());
+            modelBuilder.ApplyConfiguration(new AccountConf());
             modelBuilder.ApplyConfiguration(new CVConf());
             modelBuilder.ApplyConfiguration(new ActivityConf());
             modelBuilder.ApplyConfiguration(new SkillConf());
@@ -49,14 +49,20 @@ namespace SimpleCV.Data.DataContext.EF
             modelBuilder.Entity<CVSkill>()
                 .HasOne(cvSkill => cvSkill.RefSkill)
                 .WithMany(skill => skill.CVSkills);
+
+            /// 1:n - Account : CV
+            modelBuilder.Entity<CV>()
+                .HasOne(cv => cv.RefAccount)
+                .WithMany(acc => acc.CVs)
+                .HasForeignKey(cv => cv.AccountId);
         }
 
-        public DbSet<User> Users { get; set; }
         public DbSet<CV> CVs { get; set; }
         public DbSet<Activity> Activities { get; set; }
         public DbSet<Skill> Skills { get; set; }
         public DbSet<Info> Info { get; set; }
         public DbSet<Description> Descriptions { get; set; }
         public DbSet<CVSkill> CVSkills { get; set; }
+        public DbSet<Account> Accounts { get; set; }
     }
 }

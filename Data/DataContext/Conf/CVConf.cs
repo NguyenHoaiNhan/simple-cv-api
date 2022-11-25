@@ -12,6 +12,7 @@ namespace SimpleCV.Data.DataContext.Conf
             builder.Property(x => x.CVId).HasColumnName("cv_id");
             builder.Property(x => x.CreateDate).HasColumnName("create_date");
             builder.Property(x => x.CVUrl).HasColumnName("cv_url").IsRequired(false);
+            builder.Property(x => x.AccountId).HasColumnName("account_id").IsRequired(false);
         }
     }
 }

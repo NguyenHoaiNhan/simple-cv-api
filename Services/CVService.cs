@@ -17,39 +17,30 @@ namespace SimpleCV.Services
             _cvRepository = cVRepository;
         }
 
-        public Task<List<CVDTO>> GetCVs(int userId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<CVDTO> GetCV(int cvId)
-        {
-            return _mapper.Map<CVDTO>(
-                await _cvRepository.Get(x => x.CVId == cvId)
-            );
-        }
-
         public async Task<CVDTO> AddCV(CVDTO cv)
         {
-            var cvToAdd = _mapper.Map<CV>(cv);
             return _mapper.Map<CVDTO>(
-                await _cvRepository.Add(cvToAdd)
+                await _cvRepository.Add(_mapper.Map<CV>(cv))
             );
         }
 
-        public Task<CVDTO> ConfigCV(int cvId)
+        public async Task DeleteCV(int cvId)
         {
-            throw new NotImplementedException();
+            var cvToDelete = await _cvRepository.Get(x => x.CVId == cvId);
+            await _cvRepository.Delete(cvToDelete);
         }
 
-        public Task DeleteCV(int cvId)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<List<CVDTO>> GetCVs(int accountId)
+        {            
+            var properCVs = await _cvRepository.GetList(x => x.AccountId == accountId);
+            if(properCVs == null)
+                return null;
 
-        public Task<CVDTO> EditView(int cvId)
-        {
-            throw new NotImplementedException();
+            var results = new List<CVDTO>();
+            foreach(var item in properCVs)
+                results.Add(_mapper.Map<CVDTO>(item));
+                
+            return results;
         }
 
         public Task<CVDTO> PublishCV(int cvId)

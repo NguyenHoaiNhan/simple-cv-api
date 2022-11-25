@@ -1,7 +1,7 @@
 using AutoMapper;
+using SimpleCV.Data.DTO.Account;
 using SimpleCV.Data.DTO.CV;
 using SimpleCV.Data.DTO.CVGenerator;
-using SimpleCV.Data.DTO.User;
 using SimpleCV.Data.Entities;
 using SimpleCV.Data.Models;
 
@@ -13,10 +13,6 @@ namespace SimpleCV.Data.Utilities
         {
             public AutoMapperProfile()
             {
-                CreateMap<User, UserDTO>().ReverseMap();
-
-                CreateMap<User, UserToAddDTO>().ReverseMap();
-
                 CreateMap<CV, CVDTO>().ReverseMap();
 
                 CreateMap<Info, PersonalInfoDTO>()
@@ -35,6 +31,8 @@ namespace SimpleCV.Data.Utilities
                 CreateMap<Activity, ActivityDTO>().ReverseMap();
 
                 CreateMap<Description, TextForm>().ReverseMap();
+
+                CreateMap<Account, AccountDTO>().ReverseMap();
             }
         }
     }

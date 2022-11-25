@@ -23,12 +23,12 @@ namespace SimpleCV.Data.IoC
             services.AddAutoMapper(typeof(AutoMapperProfiles));
 
             /// Add Services
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<ICVService, CVService>();
             services.AddScoped<ICVGeneratorService, CVGeneratorService>();
 
             /// Add Repositories
-            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IInfoRepository, InfoRepository>();
             services.AddScoped<IActivityRepository, ActivityRepository>();
             services.AddScoped<ICVRepository, CVRepository>();

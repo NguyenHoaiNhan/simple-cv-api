@@ -12,7 +12,7 @@ using SimpleCV.Data.DataContext.EF;
 namespace simple_cv.Migrations
 {
     [DbContext(typeof(PgDbContext))]
-    [Migration("20221125020017_core_db_design")]
+    [Migration("20221125165749_core_db_design")]
     partial class core_db_design
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,36 @@ namespace simple_cv.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("SimpleCV.Data.Entities.Account", b =>
+                {
+                    b.Property<int>("AccountId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("account_id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("AccountId"));
+
+                    b.Property<string>("AccountName")
+                        .HasColumnType("text")
+                        .HasColumnName("account_name");
+
+                    b.Property<string>("AccountPwd")
+                        .HasColumnType("text")
+                        .HasColumnName("account_pwd");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text")
+                        .HasColumnName("email");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("text")
+                        .HasColumnName("phone_number");
+
+                    b.HasKey("AccountId");
+
+                    b.ToTable("account", (string)null);
+                });
 
             modelBuilder.Entity("SimpleCV.Data.Entities.Activity", b =>
                 {
@@ -37,7 +67,7 @@ namespace simple_cv.Migrations
                         .HasColumnType("text")
                         .HasColumnName("activity_type");
 
-                    b.Property<int>("CVid")
+                    b.Property<int>("CVId")
                         .HasColumnType("integer")
                         .HasColumnName("cv_id");
 
@@ -63,7 +93,7 @@ namespace simple_cv.Migrations
 
                     b.HasKey("ActId");
 
-                    b.HasIndex("CVid");
+                    b.HasIndex("CVId");
 
                     b.ToTable("activity", (string)null);
                 });
@@ -77,6 +107,10 @@ namespace simple_cv.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("CVId"));
 
+                    b.Property<int?>("AccountId")
+                        .HasColumnType("integer")
+                        .HasColumnName("account_id");
+
                     b.Property<string>("CVUrl")
                         .HasColumnType("text")
                         .HasColumnName("cv_url");
@@ -86,6 +120,8 @@ namespace simple_cv.Migrations
                         .HasColumnName("create_date");
 
                     b.HasKey("CVId");
+
+                    b.HasIndex("AccountId");
 
                     b.ToTable("cv", (string)null);
                 });
@@ -259,54 +295,24 @@ namespace simple_cv.Migrations
                     b.ToTable("skill", (string)null);
                 });
 
-            modelBuilder.Entity("SimpleCV.Data.Entities.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("address");
-
-                    b.Property<string>("FamilyName")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("family_name");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("first_name");
-
-                    b.Property<string>("MidName")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("mid_name");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("phone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("user", (string)null);
-                });
-
             modelBuilder.Entity("SimpleCV.Data.Entities.Activity", b =>
                 {
                     b.HasOne("SimpleCV.Data.Entities.CV", "RefCV")
                         .WithMany("Activities")
-                        .HasForeignKey("CVid")
+                        .HasForeignKey("CVId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("RefCV");
+                });
+
+            modelBuilder.Entity("SimpleCV.Data.Entities.CV", b =>
+                {
+                    b.HasOne("SimpleCV.Data.Entities.Account", "RefAccount")
+                        .WithMany("CVs")
+                        .HasForeignKey("AccountId");
+
+                    b.Navigation("RefAccount");
                 });
 
             modelBuilder.Entity("SimpleCV.Data.Entities.CVSkill", b =>
@@ -348,6 +354,11 @@ namespace simple_cv.Migrations
                         .IsRequired();
 
                     b.Navigation("RefCV");
+                });
+
+            modelBuilder.Entity("SimpleCV.Data.Entities.Account", b =>
+                {
+                    b.Navigation("CVs");
                 });
 
             modelBuilder.Entity("SimpleCV.Data.Entities.Activity", b =>
